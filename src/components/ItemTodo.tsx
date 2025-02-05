@@ -4,6 +4,7 @@ type TodoProps = {
   title: string;
   complete: boolean;
   toggleTodo: (id: string, complete: boolean) => void;
+  delete: (id: string) => void;
 };
 
 export default function TodoItem({
@@ -11,10 +12,10 @@ export default function TodoItem({
   title,
   complete,
   toggleTodo,
+  delete: handleDelete,
 }: TodoProps) {
   return (
-    // Remove the semicolon here!
-    <li className="flex gap-1 items-center">
+    <li className="flex flex-row gap-2 items-center">
       <input
         id={id}
         type="checkbox"
@@ -22,9 +23,17 @@ export default function TodoItem({
         defaultChecked={complete}
         onChange={(e) => toggleTodo(id, e.target.checked)}
       />
-      <label htmlFor={id} className="peer-checked:line-through">
+      <label htmlFor={id} className="peer-checked:line-through text-3xl">
         {title}
       </label>
+      {!complete && (
+        <button
+          onClick={() => handleDelete(id)}
+          className="px-2 border border-slate-300 rounded-lg flex items-center justify-center mt-2"
+        >
+          Delete
+        </button>
+      )}
     </li>
   );
 }
